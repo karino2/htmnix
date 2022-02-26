@@ -52,7 +52,8 @@ const paras = linesToParas(srcLines)
 
 // <div class="hn-multi-sel box" hn-value="1,2">Hello</div>
 const para2html = (para) => {
-    return `<div class="hn-multi-sel box" hn-value="${para.begin+1},${para.end}">
+    const beg = Math.max(1, para.begin)
+    return `<div class="hn-multi-sel box" hn-value="${beg},${para.end}">
               ${para.text}
             </div>`
 }
@@ -63,9 +64,9 @@ const paras2html = (paras) => {
 
 
 const parahtml = paras2html(paras)
+console.log(parahtml)
 console.log(`<div class="buttons level-right">
 <button class="button hn-cancel">Cancel</button>
 <button class="button hn-submit">Archive</button>
 </div>
 `)
-console.log(parahtml)
