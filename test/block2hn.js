@@ -52,7 +52,7 @@ const paras = linesToParas(srcLines)
 
 // <div class="hn-multi-sel box" hn-value="1,2">Hello</div>
 const para2html = (para) => {
-    return `<div class="hn-multi-sel box" hn-value="${para.begin},${para.end}">
+    return `<div class="hn-multi-sel box" hn-value="${para.begin+1},${para.end}">
               ${para.text}
             </div>`
 }
