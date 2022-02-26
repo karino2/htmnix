@@ -7,6 +7,7 @@ open PhotinoNET
 
 type Message = {Type: string; Body: string}
 
+
 let sendMessage (wnd:PhotinoWindow) (message:Message) =
     let msg = JsonSerializer.Serialize(message)
     wnd.SendWebMessage(msg) |> ignore
@@ -18,7 +19,8 @@ let onMessage html (wnd:Object) (message:string) =
     | "notifyLoaded" -> sendMessage pwnd {Type="showHtml"; Body=html}
     | "notifyCancel" -> Environment.Exit 1
     | "notifyDone" ->
-        printfn "%s" msg.Body
+        let result = JsonSerializer.Deserialize<string array>(msg.Body)
+        result|> Array.iter (printfn "%s")
         Environment.Exit 0
     | "notifyDeb" -> printfn "deb: %s" msg.Body
     | _ -> failwithf "Unknown msg type %s" msg.Type
@@ -65,7 +67,6 @@ let readLines () =
     fun _ -> Console.ReadLine()
     |>  Seq.initInfinite
     |>  Seq.takeWhile ((<>) null) 
-    |>  Seq.filter (fun line-> line.Contains("|"))
     |>  Seq.toList
 
 [<EntryPoint>]
@@ -75,8 +76,14 @@ let main argv =
         printfn "Read html from stdin. No argument."
         1
     else
-        // let lines =  readLines ()
-        let lines =  ["<h1>Hello</h1>"; "World"]
+        let lines =  readLines ()
+        (*
+        let lines =  ["""<div class="buttons level-right">""";
+                        """<button class="button hn-cancel">Cancel</button>""";
+                        """<button class="button hn-submit">Submit</button>""";
+                        """</div>""";
+                        """<div class="hn-multi-sel box" hn-value="1,2">Hello</div>"""; """<div class="hn-multi-sel box" hn-value="5,9">World</div>"""]
+        *)
 
         let html = lines |> String.concat "\n"
 
