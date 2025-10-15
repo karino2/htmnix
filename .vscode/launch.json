@@ -8,7 +8,7 @@
         "type": "coreclr",
         "request": "launch",
         "preLaunchTask": "build",
-        "program": "${workspaceFolder}/bin/Debug/net6.0/htmnix.dll",
+        "program": "${workspaceFolder}/bin/Debug/net9.0/htmnix.dll",
         "args": ["<", "${workspaceFolder}/test/test.html"],
         "cwd": "${workspaceFolder}",
         "stopAtEntry": false,
